@@ -1,6 +1,6 @@
+#!/usr/bin/env python
 
-import sys
-sys.path.append('/pyev3')
+
 from pyev3.rubiks import Rubiks
 from time import time as current_time
 import logging

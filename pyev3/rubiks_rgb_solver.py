@@ -425,7 +425,7 @@ class RubiksColorSolver(object):
         data = []
 
         color_to_num = {}
-        for side in self.sides.itervalues():  # python 2 = d.itervalues() and python 3 = iter(d.items())
+        for side in iter(self.sides.values()):  # python 2 = d.itervalues() and python 3 = iter(d.items())
             color_to_num[side.middle_square.color] = side.name
 
         for side in (self.sideU, self.sideR, self.sideF, self.sideD, self.sideL, self.sideB):
@@ -465,7 +465,7 @@ class RubiksColorSolver(object):
         Given a position on the cube return the CubeSide object
         that contians that position
         """
-        for side in self.sides.itervalues():
+        for side in iter(self.sides.values()):
             if position >= side.min_pos and position <= side.max_pos:
                 return side
         raise Exception("Could not find side for %d" % position)
@@ -483,8 +483,8 @@ class RubiksColorSolver(object):
 
     def get_squares_with_color(self, target_color):
         squares = []
-        for side in self.sides.itervalues():
-            for square in side.squares.itervalues():
+        for side in iter(self.sides.values()):
+            for square in iter(side.squares.values()):
                 if square.color == target_color:
                     squares.append(square)
         return squares
@@ -496,7 +496,7 @@ class RubiksColorSolver(object):
         """
         (crayola_color_matched, distance) = square.find_closest_match(self.crayola_colors, set_color=False)
 
-        for (crayola_color_name, crayola_color) in self.crayola_colors.iteritems():
+        for (crayola_color_name, crayola_color) in iter(self.crayola_colors.items()):
             if crayola_color == crayola_color_matched:
                 square.rawcolor.name = crayola_color_name
                 break
@@ -505,7 +505,7 @@ class RubiksColorSolver(object):
 
     def find_top_six_colors(self):
         self.crayon_box = {}
-        for side in self.sides.itervalues():
+        for side in iter(self.sides.values()):
             self.crayon_box[side.name] = side.middle_square.rawcolor
             self.set_color_name(side.middle_square)
 
@@ -559,14 +559,14 @@ class RubiksColorSolver(object):
     def identify_edge_squares(self):
         log.info('ID edge square colors')
 
-        for side in self.sides.itervalues():
+        for side in iter(self.sides.values()):
             for square in side.edge_squares:
                 square.find_closest_match(self.crayon_box)
 
     def identify_corner_squares(self):
         log.info('ID corner square colors')
 
-        for side in self.sides.itervalues():
+        for side in iter(self.sides.values()):
             for square in side.corner_squares:
                 square.find_closest_match(self.crayon_box)
 

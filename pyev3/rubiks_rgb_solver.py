@@ -403,7 +403,7 @@ class RubiksColorSolver(object):
                 line_number = 6
                 prefix =  '          '
 
-            for x in xrange(3):
+            for x in range(3):
                 data[line_number].append(prefix)
                 data[line_number].append('%2s' % side.squares[side.min_pos + (x*3)].color.name)
                 data[line_number].append('%2s' % side.squares[side.min_pos + 1 + (x*3)].color.name)
@@ -425,7 +425,7 @@ class RubiksColorSolver(object):
             color_to_num[side.middle_square.color] = side.name
 
         for side in (self.sideU, self.sideR, self.sideF, self.sideD, self.sideL, self.sideB):
-            for x in xrange(side.min_pos, side.max_pos+1):
+            for x in range(side.min_pos, side.max_pos+1):
                 color = side.squares[x].color
                 data.append(color_to_num[color])
 
@@ -450,7 +450,7 @@ class RubiksColorSolver(object):
         for side_name in self.side_order:
             side = self.sides[side_name]
 
-            for x in xrange(side.min_pos, side.max_pos+1):
+            for x in range(side.min_pos, side.max_pos+1):
                 color = side.squares[x].color
                 data.append(color_to_num[color])
         log.info('Cube for cubex: %s' % ''.join(map(str, data)))
@@ -891,9 +891,9 @@ if __name__ == '__main__':
         (kociemba, cubex) = cube.crunch_colors()
 
         if args.method == 'kociemba':
-            print ''.join(map(str, kociemba))
+            print(''.join(map(str, kociemba)))
         else:
-            print ''.join(map(str, cubex))
+            print(''.join(map(str, cubex)))
 
     except Exception as e:
         log.exception(e)

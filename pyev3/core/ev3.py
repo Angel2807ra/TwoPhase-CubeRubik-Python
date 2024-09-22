@@ -1,13 +1,16 @@
 import pyudev
 import time
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, check_output
 import os
 import math
 import logging
 import array
 import fcntl
 
+from pyev3.twophase_python.color import colors
+
 log = logging.getLogger(__name__)
+
 
 def median(data):
     data = sorted(data)
@@ -15,9 +18,10 @@ def median(data):
     if len(data) < 1:
         return None
     elif len(data) % 2 == 1:
-        return data[((len(data)+1)/2)-1]
+        return data[((len(data) + 1) / 2) - 1]
     else:
-        return float(sum(data[(len(data)/2)-1:(len(data)/2)+1]))/2.0
+        return float(sum(data[(len(data) / 2) - 1:(len(data) / 2) + 1])) / 2.0
+
 
 class Communicate(object):
 
@@ -122,6 +126,7 @@ class Color_sensor(Sensor):
         self.set_mode('COL-COLOR')
         return colors[self.get_value()]
 
+
 class Distance_sensor(Sensor):
 
     def get_prox(self):
@@ -129,6 +134,7 @@ class Distance_sensor(Sensor):
 
     def is_in_range(self):
         raise NotImplementedError
+
 
 class Infrared_sensor(Distance_sensor):
 
@@ -167,6 +173,7 @@ class Infrared_sensor(Distance_sensor):
 
         return channels
 
+
 class Ultrasonic_sensor(Distance_sensor):
 
     def __init__(self):
@@ -182,6 +189,7 @@ class Ultrasonic_sensor(Distance_sensor):
             return True
         else:
             return False
+
 
 class Motor(Communicate):
 
@@ -371,7 +379,8 @@ class Motor(Communicate):
                 log.warning("We could not get to target pos %d" % position)
                 break
 
-    def goto_position(self, position, speed=480, up=0, down=0, regulate='on', stop_mode='brake', wait=0, accuracy_sp=None):
+    def goto_position(self, position, speed=480, up=0, down=0, regulate='on', stop_mode='brake', wait=0,
+                      accuracy_sp=None):
         log.debug("%s rotate to %d at speed %d" % (self, position, speed))
         self.set_stop_mode(stop_mode)
         self.set_ramps(up, down)
@@ -454,6 +463,7 @@ class LCD(Communicate):
 
 class InvalidColor(Exception):
     pass
+
 
 class Leds(Communicate):
 
@@ -579,12 +589,12 @@ class Buttons(Communicate):
     def __init__(self):
         self.valid_buttons = ('UP', 'DOWN', 'LEFT', 'RIGHT', 'ENTER', 'BACKSPACE')
         self.key_codes = {
-            'UP' : 103,
-            'DOWN' : 108,
-            'LEFT' : 105,
-            'RIGHT' : 106,
-            'ENTER' : 28,
-            'BACKSPACE' : 14
+            'UP': 103,
+            'DOWN': 108,
+            'LEFT': 105,
+            'RIGHT': 106,
+            'ENTER': 28,
+            'BACKSPACE': 14
         }
         KEY_MAX = 0x2ff
         self.BUF_LEN = (KEY_MAX + 7) / 8
@@ -602,7 +612,7 @@ class Buttons(Communicate):
             return bool(bytes[bit / 8] & (1 << (bit % 8)))
 
         def EVIOCGKEY(length):
-            return 2 << (14+8+8) | length << (8+8) | ord('E') << 8 | 0x18
+            return 2 << (14 + 8 + 8) | length << (8 + 8) | ord('E') << 8 | 0x18
 
         button = button.upper()
 
@@ -639,5 +649,6 @@ class Robot(Communicate):
             espeak = Popen(("espeak", "-v", "en", "-p", "20", "-s", "120", '"' + s + '"', "--stdout"), stdout=PIPE)
             output = check_output(('aplay'), stdin=espeak.stdout)
 
-    def show_image(self, path):
+    @staticmethod
+    def show_image(path):
         os.system('fbi -d /dev/fb0 -T 1 -noverbose -a ' + path)

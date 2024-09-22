@@ -6,6 +6,7 @@ from facecube import FaceCube
 from cubiecube import CubieCube
 from coordcube import CoordCube
 
+
 def randomCube():
     """
     Generates a random cube.
@@ -23,10 +24,11 @@ def randomCube():
     fc = cc.toFaceCube()
     return fc.to_String()
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--random', action='store_true', help='Return random cube', default=None)
     args = parser.parse_args()
 
     if args.random:
-        print randomCube()
+        print(randomCube())

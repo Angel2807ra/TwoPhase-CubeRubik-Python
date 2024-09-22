@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('/core')
 from pyev3.core.ev3 import *
 from pprint import pformat
@@ -8,8 +9,10 @@ import signal
 
 log = logging.getLogger(__name__)
 
+
 class ScanError(Exception):
     pass
+
 
 class Rubiks(Robot):
     scan_order = [
@@ -148,7 +151,7 @@ class Rubiks(Robot):
 
         self.mot_rotate.goto_position(
             final_dest,
-            Rubiks.rotate_speed/4,
+            Rubiks.rotate_speed / 4,
             0,
             0,
             stop_mode='hold', accuracy_sp=100)
@@ -172,7 +175,6 @@ class Rubiks(Robot):
         self.mot_push.wait_for_stop()
         self.mot_push.stop()
 
-
     def flip(self):
 
         if self.shutdown_flag:
@@ -183,7 +185,7 @@ class Rubiks(Robot):
         # Push it forward so the cube is always in the same position
         # when we start the flip
         if (current_position <= Rubiks.hold_cube_pos - 10 or
-            current_position >= Rubiks.hold_cube_pos + 10):
+                current_position >= Rubiks.hold_cube_pos + 10):
             self.mot_push.goto_position(Rubiks.hold_cube_pos, 400)
             self.mot_push.wait_for_stop()
             self.mot_push.stop()
@@ -305,7 +307,7 @@ class Rubiks(Robot):
         i += 1
 
         # The gear ratio is 3:1 so 1080 is one full rotation
-        self.mot_rotate.wait_for_stop() # just to be sure
+        self.mot_rotate.wait_for_stop()  # just to be sure
         self.mot_rotate.reset()
         self.mot_rotate.rotate_position(1080, 400, 0, 0, 'on', stop_mode='hold')
         self.mot_rotate.wait_for_start()
@@ -490,7 +492,7 @@ class Rubiks(Robot):
 
         if server_conf:
             server_conf = server_conf[0]
-            log.info("server.conf is %s" %  server_conf)
+            log.info("server.conf is %s" % server_conf)
 
             with open(server_conf, 'r') as fh:
                 for line in fh.readlines():
@@ -516,7 +518,7 @@ class Rubiks(Robot):
             output = Popen(
                 ['ssh',
                  '%s@%s' % (self.server_username, self.server_ip),
-                 '%s/python/pyev3/twophase_python/solve.py %s' %\
+                 '%s/python/pyev3/twophase_python/solve.py %s' % \
                  (self.server_path, ''.join(map(str, self.cube_kociemba)))],
                 stdout=PIPE).communicate()[0]
             output = output.strip().strip()
@@ -569,7 +571,7 @@ class Rubiks(Robot):
             dist = self.distance_sensor.get_prox()
             if (self.distance_sensor.is_in_range()):
                 rubiks_present += 1
-                log.info("wait for cube...proximity %d, present for %d/%d" %\
+                log.info("wait for cube...proximity %d, present for %d/%d" % \
                          (dist, rubiks_present, rubiks_present_target))
             else:
                 if rubiks_present:

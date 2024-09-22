@@ -22,6 +22,7 @@ log = logging.getLogger(__name__)
 # cache the results
 dcache = {}
 
+
 def get_color_distance(c1, c2, on_server):
     if (c1, c2) in dcache:
         return dcache[(c1, c2)]
@@ -39,6 +40,7 @@ def get_color_distance(c1, c2, on_server):
     dcache[(c1, c2)] = distance
     return distance
 
+
 def hex_to_rgb(rgb_string):
     """
     Takes #112233 and returns the RGB values in decimal
@@ -51,9 +53,11 @@ def hex_to_rgb(rgb_string):
     blue = int(rgb_string[4:6], 16)
     return (red, green, blue)
 
+
 def rgb_to_labcolor(red, green, blue):
     rgb_obj = sRGBColor(red, green, blue, True)
     return convert_color(rgb_obj, LabColor)
+
 
 def hashtag_rgb_to_labcolor(rgb_string):
     (red, green, blue) = hex_to_rgb(rgb_string)
@@ -69,14 +73,14 @@ class Edge(object):
         self.cube = cube
 
     def __str__(self):
-        return "%s%d/%s%d %s/%s" %\
+        return "%s%d/%s%d %s/%s" % \
             (self.square1.side, self.square1.position,
              self.square2.side, self.square2.position,
              self.square1.color.name, self.square2.color.name)
 
     def colors_match(self, colorA, colorB):
         if (colorA in (self.square1.color, self.square2.color) and
-            colorB in (self.square1.color, self.square2.color)):
+                colorB in (self.square1.color, self.square2.color)):
             return True
         return False
 
@@ -111,7 +115,7 @@ class Edge(object):
             self.valid = False
             log.info("%s is an invalid edge (duplicate colors)" % self)
         elif ((self.square1.color, self.square2.color) in self.cube.valid_edges or
-            (self.square2.color, self.square1.color) in self.cube.valid_edges):
+              (self.square2.color, self.square1.color) in self.cube.valid_edges):
             self.valid = True
         else:
             self.valid = False
@@ -128,7 +132,7 @@ class Corner(object):
         self.cube = cube
 
     def __str__(self):
-        return "%s%d/%s%d/%s%d %s/%s/%s" %\
+        return "%s%d/%s%d/%s%d %s/%s/%s" % \
             (self.square1.side, self.square1.position,
              self.square2.side, self.square2.position,
              self.square3.side, self.square3.position,
@@ -136,8 +140,8 @@ class Corner(object):
 
     def colors_match(self, colorA, colorB, colorC):
         if (colorA in (self.square1.color, self.square2.color, self.square3.color) and
-            colorB in (self.square1.color, self.square2.color, self.square3.color) and
-            colorC in (self.square1.color, self.square2.color, self.square3.color)):
+                colorB in (self.square1.color, self.square2.color, self.square3.color) and
+                colorC in (self.square1.color, self.square2.color, self.square3.color)):
             return True
         return False
 
@@ -183,20 +187,21 @@ class Corner(object):
     def validate(self):
 
         if (self.square1.color == self.square2.color or
-            self.square1.color == self.square3.color or
-            self.square2.color == self.square3.color):
+                self.square1.color == self.square3.color or
+                self.square2.color == self.square3.color):
             self.valid = False
             log.info("%s is an invalid edge (duplicate colors)" % self)
         elif ((self.square1.color, self.square2.color, self.square3.color) in self.cube.valid_corners or
-            (self.square1.color, self.square3.color, self.square2.color) in self.cube.valid_corners or
-            (self.square2.color, self.square1.color, self.square3.color) in self.cube.valid_corners or
-            (self.square2.color, self.square3.color, self.square1.color) in self.cube.valid_corners or
-            (self.square3.color, self.square1.color, self.square2.color) in self.cube.valid_corners or
-            (self.square3.color, self.square2.color, self.square1.color) in self.cube.valid_corners):
+              (self.square1.color, self.square3.color, self.square2.color) in self.cube.valid_corners or
+              (self.square2.color, self.square1.color, self.square3.color) in self.cube.valid_corners or
+              (self.square2.color, self.square3.color, self.square1.color) in self.cube.valid_corners or
+              (self.square3.color, self.square1.color, self.square2.color) in self.cube.valid_corners or
+              (self.square3.color, self.square2.color, self.square1.color) in self.cube.valid_corners):
             self.valid = True
         else:
             self.valid = False
-            log.info("%s (%s, %s, %s) is an invalid corner" % (self, self.square1.color, self.square2.color, self.square3.color))
+            log.info("%s (%s, %s, %s) is an invalid corner" % (
+                self, self.square1.color, self.square2.color, self.square3.color))
 
 
 class Square(object):
@@ -241,8 +246,8 @@ class CubeSide(object):
 
     def __init__(self, cube, name):
         self.cube = cube
-        self.name = name # U, L, etc
-        self.color = None # Will be the color of the middle square
+        self.name = name  # U, L, etc
+        self.color = None  # Will be the color of the middle square
         self.squares = {}
 
         if self.name == 'U':
@@ -260,7 +265,7 @@ class CubeSide(object):
 
         self.min_pos = (index * 9) + 1
         self.max_pos = (index * 9) + 9
-        self.mid_pos = (self.min_pos + self.max_pos)/2
+        self.mid_pos = (self.min_pos + self.max_pos) / 2
         self.edge_pos = (self.min_pos + 1, self.min_pos + 3, self.min_pos + 5, self.min_pos + 7)
         self.corner_pos = (self.min_pos, self.min_pos + 2, self.min_pos + 6, self.min_pos + 8)
 
@@ -324,12 +329,12 @@ class RubiksColorSolver(object):
             self.corner_permutation_limit = 720
 
         self.sides = {
-          'U' : CubeSide(self, 'U'),
-          'L' : CubeSide(self, 'L'),
-          'F' : CubeSide(self, 'F'),
-          'R' : CubeSide(self, 'R'),
-          'B' : CubeSide(self, 'B'),
-          'D' : CubeSide(self, 'D'),
+            'U': CubeSide(self, 'U'),
+            'L': CubeSide(self, 'L'),
+            'F': CubeSide(self, 'F'),
+            'R': CubeSide(self, 'R'),
+            'B': CubeSide(self, 'B'),
+            'D': CubeSide(self, 'D'),
         }
 
         self.sideU = self.sides['U']
@@ -344,18 +349,18 @@ class RubiksColorSolver(object):
         self.corners = []
 
         self.crayola_colors = {
-            'Rd' : hashtag_rgb_to_labcolor('#C91111'), # Red
-            'Or' : hashtag_rgb_to_labcolor('#D84E09'), # Red Orange
-            'OR' : hashtag_rgb_to_labcolor('#FF8000'), # Orange
-            'Ye' : hashtag_rgb_to_labcolor('#F6EB20'), # Yellow
-            'Yg' : hashtag_rgb_to_labcolor('#51C201'), # Yellow Green
-            'Gr' : hashtag_rgb_to_labcolor('#1C8E0D'), # Green
-            'Sy' : hashtag_rgb_to_labcolor('#09C5F4'), # Sky Blue
-            'Bu' : hashtag_rgb_to_labcolor('#2862B9'), # Blue
-            'Pu' : hashtag_rgb_to_labcolor('#7E44BC'), # Purple
-            'Wh' : hashtag_rgb_to_labcolor('#FFFFFF'), # White
-             #'Br' : hashtag_rgb_to_labcolor('#943F07'), # Brown...too easy to mistake this for red/orange
-            'Bl' : hashtag_rgb_to_labcolor('#000000') # Black
+            'Rd': hashtag_rgb_to_labcolor('#CF4658'),  # Red
+            'Or': hashtag_rgb_to_labcolor('#D84E09'),  # Red Orange
+            'OR': hashtag_rgb_to_labcolor('#FA6A28'),  # Orange
+            'Ye': hashtag_rgb_to_labcolor('#F7EF48'),  # Yellow
+            'Yg': hashtag_rgb_to_labcolor('#51C201'),  # Yellow Green
+            'Gr': hashtag_rgb_to_labcolor('#70CF51'),  # Green
+            'Sy': hashtag_rgb_to_labcolor('#21CEDE'),  # Sky Blue
+            'Bu': hashtag_rgb_to_labcolor('#2862B9'),  # Blue
+            'Pu': hashtag_rgb_to_labcolor('#7E44BC'),  # Purple
+            'Wh': hashtag_rgb_to_labcolor('#FFFFFF'),  # White
+            #'Br' : hashtag_rgb_to_labcolor('#943F07'), # Brown...too easy to mistake this for red/orange
+            'Bl': hashtag_rgb_to_labcolor('#000000')  # Black
         }
 
     # ================
@@ -395,19 +400,19 @@ class RubiksColorSolver(object):
 
             if side_name == 'U':
                 line_number = 0
-                prefix =  '          '
+                prefix = '          '
             elif side_name in ('L', 'F', 'R', 'B'):
                 line_number = 3
-                prefix =  ''
+                prefix = ''
             else:
                 line_number = 6
-                prefix =  '          '
+                prefix = '          '
 
             for x in range(3):
                 data[line_number].append(prefix)
-                data[line_number].append('%2s' % side.squares[side.min_pos + (x*3)].color.name)
-                data[line_number].append('%2s' % side.squares[side.min_pos + 1 + (x*3)].color.name)
-                data[line_number].append('%2s' % side.squares[side.min_pos + 2 + (x*3)].color.name)
+                data[line_number].append('%2s' % side.squares[side.min_pos + (x * 3)].color.name)
+                data[line_number].append('%2s' % side.squares[side.min_pos + 1 + (x * 3)].color.name)
+                data[line_number].append('%2s' % side.squares[side.min_pos + 2 + (x * 3)].color.name)
                 line_number += 1
 
         output = []
@@ -420,12 +425,11 @@ class RubiksColorSolver(object):
         data = []
 
         color_to_num = {}
-
-        for side in self.sides.itervalues():
+        for side in self.sides.itervalues():  # python 2 = d.itervalues() and python 3 = iter(d.items())
             color_to_num[side.middle_square.color] = side.name
 
         for side in (self.sideU, self.sideR, self.sideF, self.sideD, self.sideL, self.sideB):
-            for x in range(side.min_pos, side.max_pos+1):
+            for x in range(side.min_pos, side.max_pos + 1):
                 color = side.squares[x].color
                 data.append(color_to_num[color])
 
@@ -450,7 +454,7 @@ class RubiksColorSolver(object):
         for side_name in self.side_order:
             side = self.sides[side_name]
 
-            for x in range(side.min_pos, side.max_pos+1):
+            for x in range(side.min_pos, side.max_pos + 1):
                 color = side.squares[x].color
                 data.append(color_to_num[color])
         log.info('Cube for cubex: %s' % ''.join(map(str, data)))
@@ -519,7 +523,7 @@ class RubiksColorSolver(object):
 
             # The middle square must match the color in the crayon_box for this side
             # so pass a dictionary with just this one color
-            side.middle_square.find_closest_match({'foo' : side.color})
+            side.middle_square.find_closest_match({'foo': side.color})
             log.info("%s is %s" % (side.middle_square, side.middle_square.color.name))
         log.info('\n')
 
@@ -626,7 +630,6 @@ class RubiksColorSolver(object):
         cube_string = ''.join(map(str, self.cube_for_kociemba()))
 
         if fake_corner_parity:
-
             # Fill in the corners with data that we know to be valid parity
             # We do this when we are validating the parity of the edges
             #log.info('pre  cube string: %s' % cube_string)
@@ -707,14 +710,14 @@ class RubiksColorSolver(object):
             scores = sorted(scores)
             (distance, edge_best_match, (colorA, colorB)) = scores[0]
 
-            log.info("%s/%s best match is %s with distance %d (permutations %d)" %\
-                (colorA.name, colorB.name, edge_best_match, distance, permutation_count))
+            log.info("%s/%s best match is %s with distance %d (permutations %d)" % \
+                     (colorA.name, colorB.name, edge_best_match, distance, permutation_count))
             best_match_total_distance += distance
             edge_best_match.update_colors(colorA, colorB)
             edge_best_match.valid = True
             needed_edges.remove((colorA, colorB))
 
-            unresolved_edges= [edge for edge in self.edges if edge.valid is False]
+            unresolved_edges = [edge for edge in self.edges if edge.valid is False]
             permutation_count = factorial(len(needed_edges))
 
         score_per_permutation = []
@@ -747,7 +750,8 @@ class RubiksColorSolver(object):
                 distance = edge_best_match.color_distance(colorA, colorB)
                 total_distance += distance
 
-                log.info("%s/%s potential match is %s with distance %d" % (colorA.name, colorB.name, edge_best_match, distance))
+                log.info("%s/%s potential match is %s with distance %d" % (
+                    colorA.name, colorB.name, edge_best_match, distance))
                 edge_best_match.update_colors(colorA, colorB)
                 edge_best_match.valid = True
 
@@ -791,8 +795,8 @@ class RubiksColorSolver(object):
             #if distance > 15:
             #    break
 
-            log.info("%s/%s/%s best match is %s with distance %d (permutations %d)" %\
-                (colorA.name, colorB.name, colorC.name, corner_best_match, distance, permutation_count))
+            log.info("%s/%s/%s best match is %s with distance %d (permutations %d)" % \
+                     (colorA.name, colorB.name, colorC.name, corner_best_match, distance, permutation_count))
             best_match_total_distance += distance
             corner_best_match.update_colors(colorA, colorB, colorC)
             corner_best_match.valid = True
@@ -830,7 +834,8 @@ class RubiksColorSolver(object):
             for (corner_best_match, (colorA, colorB, colorC)) in zip(permutation, needed_corners):
                 distance = corner_best_match.color_distance(colorA, colorB, colorC)
                 total_distance += distance
-                log.info("%s/%s/%s best match is %s with distance %d" % (colorA.name, colorB.name, colorC.name, corner_best_match, distance))
+                log.info("%s/%s/%s best match is %s with distance %d" % (
+                    colorA.name, colorB.name, colorC.name, corner_best_match, distance))
                 corner_best_match.update_colors(colorA, colorB, colorC)
                 corner_best_match.valid = True
 
@@ -841,7 +846,6 @@ class RubiksColorSolver(object):
                 log.info("Total distance: %d, cube parity is NOT valid" % total_distance)
 
         log.info('\n')
-
 
     def crunch_colors(self):
         log.info('Discover the six colors')
@@ -862,6 +866,7 @@ class RubiksColorSolver(object):
         self.print_cube()
         self.print_layout()
         return (self.cube_for_kociemba(), self.cube_for_cubex())
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

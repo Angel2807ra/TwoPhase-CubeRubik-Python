@@ -171,7 +171,7 @@ class Rubiks(Robot):
         """
         Move the flipper arm out of the way
         """
-        self.mot_push.goto_position(0, 400)
+        self.mot_push.goto_position(0, 300)
         self.mot_push.wait_for_stop()
         self.mot_push.stop()
 
@@ -186,18 +186,18 @@ class Rubiks(Robot):
         # when we start the flip
         if (current_position <= Rubiks.hold_cube_pos - 10 or
                 current_position >= Rubiks.hold_cube_pos + 10):
-            self.mot_push.goto_position(Rubiks.hold_cube_pos, 400)
+            self.mot_push.goto_position(Rubiks.hold_cube_pos, 300)
             self.mot_push.wait_for_stop()
             self.mot_push.stop()
 
         # Grab the cube and pull back
-        self.mot_push.goto_position(180, 400)
+        self.mot_push.goto_position(180, 300)
         self.mot_push.wait_for_stop()
         self.mot_push.stop()
 
         # At this point the cube is at an angle, push it forward to
         # drop it back down in the turntable
-        self.mot_push.goto_position(Rubiks.hold_cube_pos, 600)
+        self.mot_push.goto_position(Rubiks.hold_cube_pos, 500)
         self.mot_push.wait_for_stop()
         self.mot_push.stop()
 
@@ -255,7 +255,7 @@ class Rubiks(Robot):
         self.mot_rotate.reset()
 
     def put_arm_middle(self):
-        self.mot_bras.goto_position(-750, 1200, stop_mode='hold')
+        self.mot_bras.goto_position(-750, 1100, stop_mode='hold')
         self.mot_bras.wait_for_stop()
 
     def put_arm_corner(self, i):
@@ -266,7 +266,7 @@ class Rubiks(Robot):
         else:
             diff = 0
         diff = 0
-        self.mot_bras.goto_position(-580 - diff, 1200, stop_mode='hold')
+        self.mot_bras.goto_position(-580 - diff, 1100, stop_mode='hold')
         self.mot_bras.wait_for_stop()
 
     def put_arm_edge(self, i):
@@ -275,15 +275,15 @@ class Rubiks(Robot):
         #else:
         #    diff = 0
         diff = 0
-        self.mot_bras.goto_position(-650 - diff, 1200, stop_mode='hold')
+        self.mot_bras.goto_position(-650 - diff, 1100, stop_mode='hold')
         self.mot_bras.wait_for_stop()
 
     def remove_arm(self):
-        self.mot_bras.goto_position(0, 1200)
+        self.mot_bras.goto_position(0, 1100)
         self.mot_bras.wait_for_stop()
 
     def remove_arm_halfway(self):
-        self.mot_bras.goto_position(-400, 1200)
+        self.mot_bras.goto_position(-400, 1100)
         self.mot_bras.wait_for_stop()
 
     def scan_face(self, last_face=False):
@@ -309,7 +309,7 @@ class Rubiks(Robot):
         # The gear ratio is 3:1 so 1080 is one full rotation
         self.mot_rotate.wait_for_stop()  # just to be sure
         self.mot_rotate.reset()
-        self.mot_rotate.rotate_position(1080, 400, 0, 0, 'on', stop_mode='hold')
+        self.mot_rotate.rotate_position(1080, 200, 0, 0, 'on', stop_mode='hold')
         self.mot_rotate.wait_for_start()
 
         #while math.fabs(self.mot_rotate.get_speed()) > 2:
@@ -351,7 +351,7 @@ class Rubiks(Robot):
         self.mot_rotate.wait_for_stop()
 
         # If we over rotated at all, back up
-        self.mot_rotate.goto_position(1080, 200, 0, 0, 'on', stop_mode='hold', accuracy_sp=100)
+        self.mot_rotate.goto_position(1080, 100, 0, 0, 'on', stop_mode='hold', accuracy_sp=100)
         self.mot_rotate.wait_for_stop()
         self.mot_rotate.stop()
         self.mot_rotate.reset()

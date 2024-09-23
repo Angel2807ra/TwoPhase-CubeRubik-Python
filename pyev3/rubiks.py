@@ -283,7 +283,7 @@ class Rubiks(Robot):
         self.mot_bras.wait_for_stop()
 
     def remove_arm_halfway(self):
-        self.mot_bras.goto_position(-400, 1100)
+        self.mot_bras.goto_position(-500, 1100)
         self.mot_bras.wait_for_stop()
 
     def scan_face(self, last_face=False):

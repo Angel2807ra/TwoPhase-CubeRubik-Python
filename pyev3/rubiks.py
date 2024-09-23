@@ -255,7 +255,7 @@ class Rubiks(Robot):
         self.mot_rotate.reset()
 
     def put_arm_middle(self):
-        self.mot_bras.goto_position(-750, 1100, stop_mode='hold')
+        self.mot_bras.goto_position(-800, 1100, stop_mode='hold')
         self.mot_bras.wait_for_stop()
 
     def put_arm_corner(self, i):
@@ -266,7 +266,7 @@ class Rubiks(Robot):
         else:
             diff = 0
         diff = 0
-        self.mot_bras.goto_position(-580 - diff, 1100, stop_mode='hold')
+        self.mot_bras.goto_position(-700 - diff, 1100, stop_mode='hold')
         self.mot_bras.wait_for_stop()
 
     def put_arm_edge(self, i):
@@ -275,7 +275,7 @@ class Rubiks(Robot):
         #else:
         #    diff = 0
         diff = 0
-        self.mot_bras.goto_position(-650 - diff, 1100, stop_mode='hold')
+        self.mot_bras.goto_position(-700 - diff, 1100, stop_mode='hold')
         self.mot_bras.wait_for_stop()
 
     def remove_arm(self):

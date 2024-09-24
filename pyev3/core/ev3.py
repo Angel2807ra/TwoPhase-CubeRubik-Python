@@ -207,7 +207,7 @@ class Motor(Communicate):
                 break
         else:
             log.info("Available Motors:\n%s" % '\n\n'.join(map(str, motors)))
-            raise EnvironmentError("Motor not found")
+            raise Exception("Motor not found")
 
 
 

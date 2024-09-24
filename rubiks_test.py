@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import traceback
 
 from pyev3.rubiks import Rubiks
 from time import time as current_time
@@ -40,5 +40,7 @@ try:
     rub.mot_rotate.stop()
 except Exception as e:
     rub.leds.set_all('red')
-    log.exception(e)
+    log.error('An error occurred: {}'.format(e))
+    log.error('Traceback : ')
+    log.error(traceback.format_exc())
     sys.exit(1)

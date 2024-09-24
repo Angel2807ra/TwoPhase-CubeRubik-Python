@@ -206,11 +206,8 @@ class Motor(Communicate):
                 self.port = port.upper()
                 break
         else:
-            try:
-                log.info("Available Motors:\n%s" % '\n\n'.join(map(str, motors)))
-                raise EnvironmentError("Motor not found")
-            except Exception as e:
-                log.error(e)
+            log.info("Available Motors:\n%s" % '\n\n'.join(map(str, motors)))
+            raise EnvironmentError("Motor not found")
 
 
 

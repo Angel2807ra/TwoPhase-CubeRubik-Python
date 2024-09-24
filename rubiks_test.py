@@ -23,7 +23,6 @@ except Exception as e:
     sys.exit(1)
 
 try:
-
     rub.leds.set_all('green')
     rub.wait_for_cube_insert()
     rub.scan()

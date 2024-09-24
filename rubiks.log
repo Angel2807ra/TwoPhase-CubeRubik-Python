@@ -1,17 +1,34 @@
-2024-09-24 14:33:34,851 rubiks_test.py     INFO: Begin...
-2024-09-24 14:33:36,024       ev3.py     INFO: Available Sensors:
-('ev3-ports:in1', 'lego-ev3-color')
-('ev3-ports:in2', 'lego-ev3-us')
-2024-09-24 14:33:36,037 rubiks_test.py    ERROR: An error occurred: Sensor not found
-2024-09-24 14:33:36,050 rubiks_test.py    ERROR: Traceback : 
-2024-09-24 14:33:36,107 rubiks_test.py    ERROR: Traceback (most recent call last):
-  File "./rubiks_test.py", line 18, in <module>
-    rub = Rubiks()
-  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/rubiks.py", line 38, in __init__
-    self.distance_sensor = Infrared_sensor()
-  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/core/ev3.py", line 142, in __init__
-    Sensor.__init__(self, type_id='lego-ev3-ir')
-  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/core/ev3.py", line 79, in __init__
-    raise Exception("Sensor not found")
-Exception: Sensor not found
+2024-09-24 14:45:57,255 rubiks_test.py     INFO: Begin...
+2024-09-24 14:45:58,403    rubiks.py     INFO: Initialize flipper
+2024-09-24 14:45:58,636    rubiks.py     INFO: Initialize color arm
+2024-09-24 14:45:59,688    rubiks.py     INFO: Initialize turntable
+2024-09-24 14:46:00,587    rubiks.py     INFO: wait for cube...proximity 113, present for 1/10
+2024-09-24 14:46:00,742    rubiks.py     INFO: wait for cube...proximity 113, present for 2/10
+2024-09-24 14:46:00,870    rubiks.py     INFO: wait for cube...proximity 120, present for 3/10
+2024-09-24 14:46:00,996    rubiks.py     INFO: wait for cube...proximity 113, present for 4/10
+2024-09-24 14:46:01,123    rubiks.py     INFO: wait for cube...proximity 113, present for 5/10
+2024-09-24 14:46:01,246    rubiks.py     INFO: wait for cube...proximity 113, present for 6/10
+2024-09-24 14:46:01,368    rubiks.py     INFO: wait for cube...proximity 113, present for 7/10
+2024-09-24 14:46:01,504    rubiks.py     INFO: wait for cube...proximity 113, present for 8/10
+2024-09-24 14:46:01,646    rubiks.py     INFO: wait for cube...proximity 113, present for 9/10
+2024-09-24 14:46:01,767    rubiks.py     INFO: wait for cube...proximity 113, present for 10/10
+2024-09-24 14:46:01,779    rubiks.py     INFO: wait for cube...cube found and stable
+2024-09-24 14:46:01,830    rubiks.py     INFO: scanning face
+2024-09-24 14:46:04,207    rubiks.py     INFO: i 1, k 1, current_position 140, current_color (223, 217, 195)
+2024-09-24 14:46:04,657    rubiks.py     INFO: i 2, k 2, current_position 318, current_color (186, 221, 244)
+2024-09-24 14:46:05,112    rubiks.py     INFO: i 3, k 3, current_position 504, current_color (13, 13, 35)
+2024-09-24 14:46:05,511    rubiks.py     INFO: i 4, k 4, current_position 675, current_color (89, 226, 278)
+2024-09-24 14:46:05,814    rubiks.py     INFO: i 5, k 5, current_position 793, current_color (134, 198, 349)
+2024-09-24 14:46:06,083    rubiks.py     INFO: i 6, k 6, current_position 898, current_color (245, 311, 372)
+2024-09-24 14:46:06,429    rubiks.py     INFO: i 7, k 7, current_position 1032, current_color (92, 228, 279)
+2024-09-24 14:46:06,688 rubiks_test.py    ERROR: An error occurred: i is 8..should be 9
+2024-09-24 14:46:06,705 rubiks_test.py    ERROR: Traceback : 
+2024-09-24 14:46:06,785 rubiks_test.py    ERROR: Traceback (most recent call last):
+  File "./rubiks_test.py", line 29, in <module>
+    rub.scan()
+  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/rubiks.py", line 366, in scan
+    self.scan_face()
+  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/rubiks.py", line 352, in scan_face
+    raise ScanError('i is %d..should be 9' % i)
+ScanError: i is 8..should be 9
 

@@ -10,11 +10,20 @@ logging.basicConfig(filename='rubiks.log',
                     filemode='w',
                     level=logging.INFO,
                     format='%(asctime)s %(filename)12s %(levelname)8s: %(message)s')
+
 log = logging.getLogger(__name__)
 log.info('Begin...')
-rub = Rubiks()
 
 try:
+    rub = Rubiks()
+except Exception as e:
+    log.error('An error occurred: {}'.format(e))
+    log.error('Traceback : ')
+    log.error(traceback.format_exc())
+    sys.exit(1)
+
+try:
+
     rub.leds.set_all('green')
     rub.wait_for_cube_insert()
     rub.scan()

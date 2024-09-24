@@ -35,9 +35,10 @@ class Rubiks(Robot):
         self.mot_rotate = Motor('B', 'turntable')
         self.color_sensor = Color_sensor()
         try:
-            self.distance_sensor = Infrared_sensor()
-        except EnvironmentError:
+
             self.distance_sensor = Ultrasonic_sensor()
+        except EnvironmentError:
+            self.distance_sensor = Infrared_sensor()
         self.cube = {}
         self.init_motors()
         self.state = ['U', 'D', 'F', 'L', 'B', 'R']

@@ -278,7 +278,7 @@ class Rubiks(Robot):
         #else:
         #    diff = 0
         diff = 0
-        self.mot_bras.goto_position(-580 - diff, 1200, stop_mode='hold')  #change the position -650 for -580
+        self.mot_bras.goto_position(-650 - diff, 1200, stop_mode='hold')  #change the position -650 for -580
         self.mot_bras.wait_for_stop()
 
     def remove_arm(self):

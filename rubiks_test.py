@@ -14,14 +14,15 @@ logging.basicConfig(filename='rubiks.log',
 log = logging.getLogger(__name__)
 log.info('Begin...')
 
-try:
-    rub = Rubiks()
+"""try:
+    
 except Exception as e:
     log.error('An error occurred: {}'.format(e))
     log.error('Traceback : ')
     log.error(traceback.format_exc())
     sys.exit(1)
-
+"""
+rub = Rubiks()
 try:
     rub.leds.set_all('green')
     rub.wait_for_cube_insert()

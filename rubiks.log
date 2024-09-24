@@ -1,3 +1,17 @@
-2024-09-24 02:36:44,706 rubiks_test.py     INFO: Begin...
-2024-09-24 02:36:44,877       ev3.py     INFO: Available Motors:
+2024-09-24 14:33:34,851 rubiks_test.py     INFO: Begin...
+2024-09-24 14:33:36,024       ev3.py     INFO: Available Sensors:
+('ev3-ports:in1', 'lego-ev3-color')
+('ev3-ports:in2', 'lego-ev3-us')
+2024-09-24 14:33:36,037 rubiks_test.py    ERROR: An error occurred: Sensor not found
+2024-09-24 14:33:36,050 rubiks_test.py    ERROR: Traceback : 
+2024-09-24 14:33:36,107 rubiks_test.py    ERROR: Traceback (most recent call last):
+  File "./rubiks_test.py", line 18, in <module>
+    rub = Rubiks()
+  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/rubiks.py", line 38, in __init__
+    self.distance_sensor = Infrared_sensor()
+  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/core/ev3.py", line 142, in __init__
+    Sensor.__init__(self, type_id='lego-ev3-ir')
+  File "/home/robot/TwoPhase-CubeRubik-Python/pyev3/core/ev3.py", line 79, in __init__
+    raise Exception("Sensor not found")
+Exception: Sensor not found
 

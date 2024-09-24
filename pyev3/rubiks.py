@@ -131,7 +131,7 @@ class Rubiks(Robot):
 
         # Move the arm down to hold the block in place
         if self.mot_push.get_position() < Rubiks.hold_cube_pos:
-            self.mot_push.goto_position(Rubiks.hold_cube_pos, 300, stop_mode='hold')
+            self.mot_push.goto_position(Rubiks.hold_cube_pos, 200, stop_mode='hold') # change 300 for 200
             self.mot_push.wait_for_start()
             self.mot_push.wait_for_stop()
             self.mot_push.stop()
@@ -186,18 +186,18 @@ class Rubiks(Robot):
         # when we start the flip
         if (current_position <= Rubiks.hold_cube_pos - 10 or
                 current_position >= Rubiks.hold_cube_pos + 10):
-            self.mot_push.goto_position(Rubiks.hold_cube_pos, 400)
+            self.mot_push.goto_position(Rubiks.hold_cube_pos, 300) # change the speed 400 -> 300
             self.mot_push.wait_for_stop()
             self.mot_push.stop()
 
         # Grab the cube and pull back
-        self.mot_push.goto_position(180, 400)
+        self.mot_push.goto_position(180, 300)  # change the speed 400 -> 300
         self.mot_push.wait_for_stop()
         self.mot_push.stop()
 
         # At this point the cube is at an angle, push it forward to
         # drop it back down in the turntable
-        self.mot_push.goto_position(Rubiks.hold_cube_pos, 600)
+        self.mot_push.goto_position(Rubiks.hold_cube_pos, 400) # change the speed 600 -> 400
         self.mot_push.wait_for_stop()
         self.mot_push.stop()
 
@@ -254,6 +254,8 @@ class Rubiks(Robot):
         self.mot_rotate.stop()
         self.mot_rotate.reset()
 
+
+        # Moves of color arm
     def put_arm_middle(self):
         self.mot_bras.goto_position(-750, 1200, stop_mode='hold')
         self.mot_bras.wait_for_stop()
@@ -275,7 +277,7 @@ class Rubiks(Robot):
         #else:
         #    diff = 0
         diff = 0
-        self.mot_bras.goto_position(-650 - diff, 1200, stop_mode='hold')
+        self.mot_bras.goto_position(-650 - diff, 1200, stop_mode='hold')  #change the position -650 for -580
         self.mot_bras.wait_for_stop()
 
     def remove_arm(self):

@@ -76,7 +76,7 @@ class Sensor(Communicate):
 
         else:  # I love for-else blocks
             log.info("Available Sensors:\n%s" % '\n'.join(map(str, sensors)))
-            raise EnvironmentError("Sensor not found")
+            raise Exception("Sensor not found")
 
     def set_mode(self, mode):
         if self.mode != mode:
@@ -207,7 +207,9 @@ class Motor(Communicate):
                 break
         else:
             log.info("Available Motors:\n%s" % '\n\n'.join(map(str, motors)))
-            raise EnvironmentError("Motor not found")
+            raise Exception("Motor not found")
+
+
 
         self.desc = desc
         self.run_commands = self.get_run_commands()

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 from /home/robot/Colormath.color_objects import sRGBColor, LabColor
 from /home/robot/Colormath.color_diff import delta_e_cmc
 from /home/robot/Colormath.color_conversions import convert_color

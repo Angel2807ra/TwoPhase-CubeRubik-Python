@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from colormath.color_objects import sRGBColor, LabColor
-from colormath.color_diff import delta_e_cmc
-from colormath.color_conversions import convert_color
+from /home/robot/Colormath.color_objects import sRGBColor, LabColor
+from /home/robot/Colormath.color_diff import delta_e_cmc
+from /home/robot/Colormath.color_conversions import convert_color
 from itertools import permutations
 from math import factorial
 from pprint import pformat
